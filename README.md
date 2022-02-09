@@ -1,0 +1,2 @@
+# domain_verification_manager
+Android DomainVerificationManager for Flutter plugin
