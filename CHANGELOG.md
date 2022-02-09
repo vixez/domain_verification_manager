@@ -1,3 +1,15 @@
+## 0.0.4
+
+* Updated readme
+
+## 0.0.3
+
+* Added `isSupported`
+
+## 0.0.2
+
+* Updated license
+
 ## 0.0.1
 
 * A first version where you can:
@@ -6,3 +18,4 @@
     * Get domains that haven't passed Android App Links verification, but the user manually
       associated the app
     * All other domains
+    

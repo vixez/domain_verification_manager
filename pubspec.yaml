@@ -1,6 +1,6 @@
 name: domain_verification_manager
 description: Use the DomainVerificationManager API for Android from Flutter.
-version: 0.0.1
+version: 0.0.4
 repository: https://github.com/vixez/domain_verification_manager
 
 environment:

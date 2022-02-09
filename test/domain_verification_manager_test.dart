@@ -10,6 +10,8 @@ void main() {
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
       switch (methodCall.method) {
+        case 'getIsSupported':
+          return true;
         case 'getDomainStateVerified':
           return [];
         case 'getDomainStateSelected':
@@ -23,6 +25,10 @@ void main() {
 
   tearDown(() {
     channel.setMockMethodCallHandler(null);
+  });
+
+  test('getIsSupported', () async {
+    expect(await DomainVerificationManager.isSupported, true);
   });
 
   test('getDomainStateVerified', () async {

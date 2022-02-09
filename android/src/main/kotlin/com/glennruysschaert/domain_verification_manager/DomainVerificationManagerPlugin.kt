@@ -39,8 +39,13 @@ class DomainVerificationManagerPlugin : FlutterPlugin, MethodCallHandler, Activi
     override fun onDetachedFromActivity() {
         activityReference.clear()
     }
-    
+
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+        if (call.method == "getIsSupported") {
+            result.success(getIsSupported())
+            return
+        }
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
             result.error("WRONG_SDK_VERSION",
                     "The minimum SDK version is ${Build.VERSION_CODES.S} ",
@@ -48,6 +53,7 @@ class DomainVerificationManagerPlugin : FlutterPlugin, MethodCallHandler, Activi
             return
         }
         when (call.method) {
+            "getIsSupported" -> result.success(getIsSupported())
             "getDomainStateVerified" -> result.success(getDomainStateVerified())
             "getDomainStateSelected" -> result.success(getDomainStateSelected())
             "getDomainStateNone" -> result.success(getDomainStateNone())
@@ -75,6 +81,13 @@ class DomainVerificationManagerPlugin : FlutterPlugin, MethodCallHandler, Activi
     // ---------------------
     // PRIVATE
     // ---------------------
+
+    /**
+     * Check if the current platform and its version are supported.
+     */
+    private fun getIsSupported(): Boolean {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    }
 
     /**
      * Returns the domain verification user state.

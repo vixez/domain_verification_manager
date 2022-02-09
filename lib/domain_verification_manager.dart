@@ -4,16 +4,31 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class DomainVerificationManager {
-  static late bool isAndroid = defaultTargetPlatform == TargetPlatform.android;
+  static late final bool _isAndroid =
+      defaultTargetPlatform == TargetPlatform.android;
   static const String kUnsupportedPlatformError =
       'This platform is not supported';
 
   static const MethodChannel _channel =
       MethodChannel('domain_verification_manager');
 
+  /// Check if the current platform and its version are supported.
+  static Future<bool> get isSupported async {
+    if (!_isAndroid) {
+      return false;
+    }
+
+    final dynamic result = await _channel.invokeMethod('getIsSupported');
+    if (result == null) {
+      return false;
+    }
+
+    return result;
+  }
+
   /// Domains that have passed Android App Links verification.
   static Future<List<String>?> get domainStageVerified async {
-    if (!isAndroid) {
+    if (!_isAndroid) {
       throw UnsupportedError(kUnsupportedPlatformError);
     }
 
@@ -29,7 +44,7 @@ class DomainVerificationManager {
   /// Domains that haven't passed Android App Links verification but that the user
   /// has associated with an app.
   static Future<List<String>?> get domainStageSelected async {
-    if (!isAndroid) {
+    if (!_isAndroid) {
       throw UnsupportedError(kUnsupportedPlatformError);
     }
 
@@ -44,7 +59,7 @@ class DomainVerificationManager {
 
   /// All other domains.
   static Future<List<String>?> get domainStageNone async {
-    if (!isAndroid) {
+    if (!_isAndroid) {
       throw UnsupportedError(kUnsupportedPlatformError);
     }
 
@@ -58,7 +73,7 @@ class DomainVerificationManager {
 
   /// Request permission from the user by opening the app settings.
   static Future<void> domainRequest() async {
-    if (!isAndroid) {
+    if (!_isAndroid) {
       throw UnsupportedError(kUnsupportedPlatformError);
     }
 

@@ -16,6 +16,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String _isSupported = 'Unknown';
   String _domainStateVerified = 'Unknown';
   String _domainStateSelected = 'Unknown';
   String _domainStateNone = 'Unknown';
@@ -23,9 +24,27 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    getIsSupported();
     getDomainStageVerified();
     getDomainStateSelected();
     getDomainStateNone();
+  }
+
+  Future<void> getIsSupported() async {
+    String result;
+    try {
+      result = (await DomainVerificationManager.isSupported).toString();
+    } on PlatformException {
+      result = 'Failed to get getIsSupported';
+    }
+    if (!mounted) {
+      _isSupported = result;
+      return;
+    }
+
+    setState(() {
+      _isSupported = result;
+    });
   }
 
   Future<void> getDomainStageVerified() async {
@@ -90,28 +109,33 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Domain Veriification Manager'),
         ),
-        body: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 50.0),
-              Text(
-                'Verified:\n$_domainStateVerified\n\n',
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                'Not verified, but user associated the link:\n$_domainStateSelected\n\n',
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                'Not verified and not assiociated to the app:\n$_domainStateNone\n\n',
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 12.0),
-              ElevatedButton(
-                onPressed: domainRequest,
-                child: const Text('Request'),
-              ),
-            ],
+        body: Padding(
+          padding: const EdgeInsets.only(top: 12.0),
+          child: Center(
+            child: Column(
+              children: [
+                Text(
+                  'Supported: $_isSupported\n\n',
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  'Verified:\n$_domainStateVerified\n\n',
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  'Not verified, but user associated the link:\n$_domainStateSelected\n\n',
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  'Not verified and not assiociated to the app:\n$_domainStateNone\n\n',
+                  textAlign: TextAlign.center,
+                ),
+                ElevatedButton(
+                  onPressed: domainRequest,
+                  child: const Text('Request'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
