@@ -1,5 +1,5 @@
-
 # Domain Verification Manager
+[![pub package](https://img.shields.io/pub/v/domain_verification_manager.svg)](https://pub.dev/packages/domain_verification_manager)
 
 This plugin exposes some of the method to check the [Android App Links verification](https://developer.android.com/training/app-links/verify-site-associations) state, by using the [DomainVerificationManager](https://developer.android.com/reference/android/content/pm/verify/domain/DomainVerificationManager) API.
 
@@ -14,7 +14,10 @@ You are able to:
 * All other domains (`domainStageNone`)
 * Open the app settings where the user can manually grant permission (`domainRequest`)
 
-`await DomainVerificationManager.domainStageVerified` returns a `List<String>?`.
-`await DomainVerificationManager.domainStageSelected` returns a `List<String>?`.
-`await DomainVerificationManager.domainStageNone` returns a `List<String>?`.
+`await DomainVerificationManager.domainStageVerified` returns a `List<String>?`.\
+`await DomainVerificationManager.domainStageSelected` returns a `List<String>?`.\
+`await DomainVerificationManager.domainStageNone` returns a `List<String>?`.\
 `await DomainVerificationManager.domainRequest` opens the app settings page.
+
+
+
