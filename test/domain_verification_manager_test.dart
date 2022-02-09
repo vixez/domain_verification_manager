@@ -9,7 +9,15 @@ void main() {
 
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
+      switch (methodCall.method) {
+        case 'getDomainStateVerified':
+          return [];
+        case 'getDomainStateSelected':
+          return [];
+        case 'getDomainStateNone':
+          return [];
+      }
+      return [];
     });
   });
 
@@ -17,15 +25,15 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
+  test('getDomainStateVerified', () async {
+    expect(await DomainVerificationManager.domainStageSelected, []);
+  });
+
   test('getDomainStateSelected', () async {
-    expect(await DomainVerificationManager.domainStageSelected, '42');
+    expect(await DomainVerificationManager.domainStageSelected, []);
   });
 
   test('getDomainStateNone', () async {
-    expect(await DomainVerificationManager.domainStageSelected, '42');
-  });
-
-  test('getDomainStateSelected', () async {
-    expect(await DomainVerificationManager.domainStageSelected, '42');
+    expect(await DomainVerificationManager.domainStageSelected, []);
   });
 }

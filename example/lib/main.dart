@@ -103,10 +103,10 @@ class _MyAppState extends State<MyApp> {
                 textAlign: TextAlign.center,
               ),
               Text(
-                'Not verified and not assiociated to the app:\n$_domainStateNone\n',
+                'Not verified and not assiociated to the app:\n$_domainStateNone\n\n',
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 25.0),
+              const SizedBox(height: 12.0),
               ElevatedButton(
                 onPressed: domainRequest,
                 child: const Text('Request'),

@@ -20,14 +20,8 @@ import java.lang.ref.WeakReference
 
 /** DomainVerificationManagerPlugin */
 class DomainVerificationManagerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
-    /// The MethodChannel that will the communication between Flutter and native Android
-    ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-    /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
-
     private val activity get() = activityReference.get()
-
     private var activityReference = WeakReference<Activity>(null)
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
@@ -45,11 +39,12 @@ class DomainVerificationManagerPlugin : FlutterPlugin, MethodCallHandler, Activi
     override fun onDetachedFromActivity() {
         activityReference.clear()
     }
-
-
+    
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        if (Build.VERSION.SDK_INT < 31) {
-            result.error("WRONG_SDK_VERSION", "The minimum SDK version is 31 ", null)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            result.error("WRONG_SDK_VERSION",
+                    "The minimum SDK version is ${Build.VERSION_CODES.S} ",
+                    null)
             return
         }
         when (call.method) {
@@ -66,8 +61,10 @@ class DomainVerificationManagerPlugin : FlutterPlugin, MethodCallHandler, Activi
         }
     }
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "domain_verification_manager")
+    override fun onAttachedToEngine(@NonNull flutterPluginBinding:
+                                    FlutterPlugin.FlutterPluginBinding) {
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger,
+                "domain_verification_manager")
         channel.setMethodCallHandler(this)
     }
 

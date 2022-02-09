@@ -1,15 +1,23 @@
-# domain_verification_manager
+# Domain Verification Manager
 
-A new flutter plugin project.
+This plugin exposes some of the method to check
+the [Android App Links verification](https://developer.android.com/training/app-links/verify-site-associations)
+state, by using
+the [DomainVerificationManager](https://developer.android.com/reference/android/content/pm/verify/domain/DomainVerificationManager)
+API.
 
-## Getting Started
+:warning: This only works with Android 12 (S - API Level 31) and up. Older versions will throw an
+error with `WRONG_SDK_VERSION`, while other platforms will return `UnsupportedError`.
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+You are able to:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* Get the domains that have passed Android App Links verification (`domainStageVerified`)
+* Get domains that haven't passed Android App Links verification, but the user manually associated
+  the app (`domainStageSelected`)
+* All other domains (`domainStageNone`)
+* Open the app settings where the user can manually grant permission (`domainRequest`)
 
+`await DomainVerificationManager.domainStageVerified` returns a `List<String>?`.
+`await DomainVerificationManager.domainStageSelected` returns a `List<String>?`.
+`await DomainVerificationManager.domainStageNone` returns a `List<String>?`.
+`await DomainVerificationManager.domainRequest`  opens the app settings page.
