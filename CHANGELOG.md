@@ -1,4 +1,12 @@
-## 0.0.5
+## 0.0.8
+
+* SDk constraint set to `>=2.15.1 <3.0.0`
+
+## 0.0.7
+
+* Fixed changelog and readme typos
+
+## 0.0.6
 
 * Added pub.dev badge to readme
 
