@@ -1,6 +1,10 @@
+## 0.0.9
+
+* Fix for Samsung devices using One UI
+
 ## 0.0.8
 
-* SDk constraint set to `>=2.15.1 <3.0.0`
+* SDK constraint set to `>=2.15.1 <3.0.0`
 
 ## 0.0.7
 

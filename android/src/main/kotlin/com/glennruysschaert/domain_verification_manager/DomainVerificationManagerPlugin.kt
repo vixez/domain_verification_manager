@@ -137,7 +137,15 @@ class DomainVerificationManagerPlugin : FlutterPlugin, MethodCallHandler, Activi
      */
     @RequiresApi(Build.VERSION_CODES.S)
     private fun domainRequest() {
-        val intent = Intent(Settings.ACTION_APP_OPEN_BY_DEFAULT_SETTINGS,
+        val deviceManufacturer = Build.MANUFACTURER.toString().lowercase()
+
+        val action: String = if (deviceManufacturer.contains("samsung")) {
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        } else {
+            Settings.ACTION_APP_OPEN_BY_DEFAULT_SETTINGS
+        }
+
+        val intent = Intent(action,
                 Uri.parse("package:${activity?.packageName}"))
         activity?.startActivity(intent)
     }
