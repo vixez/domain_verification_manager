@@ -1,3 +1,8 @@
+## 1.0.0
+
+* Stable release
+* Check if running on web, as it is not supported there
+
 ## 0.0.9
 
 * Fix for Samsung devices using One UI
